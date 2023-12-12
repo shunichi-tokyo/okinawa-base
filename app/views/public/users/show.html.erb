@@ -2,6 +2,10 @@
 
 <h2>マイページ</h2>
 
+<% if @user == current_user %>
+  <div><%= link_to "編集", edit_user_path(@user.id), class:"btn btn-sm btn-success" %></div>
+<% end %>
+
 <div>
   <p>ユーザー名</p>
   <%= @user.name %>
@@ -11,4 +15,12 @@
   <%= image_tag @user.get_profile_image(100,100) %>
 </div>
 
-<div></div>
+<div>
+  <%= @user.email %>
+</div>
+
+
+<div>
+  <p>自己紹介</p>
+  <%= @user.introduction %>
+</div>
