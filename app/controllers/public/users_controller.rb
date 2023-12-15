@@ -19,12 +19,22 @@ class Public::UsersController < ApplicationController
     end
   end
 
+  def check
+  end
+
+  def withdraw
+    @user = current_user
+    @user.update(is_active: false)
+    reset_session
+    redirect_to root_path
+  end
+
   private
 
   def user_params
     params.require(:user).permit(:name, :introduction, :is_active, :profile_image)
   end
-  
+
   def ensure_user
     user = User.find(params[:id])
     unless user.id == current_user.id
