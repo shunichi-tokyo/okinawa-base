@@ -1,0 +1,12 @@
+<h1>Public::Posts#index</h1>
+<p>投稿一覧</p>
+
+<div>
+  <% @posts.each do |post| %>
+
+  <%= image_tag post.get_image(150,150) %>
+
+  <%= post.event_name %>
+  <%= post.event_detail %>
+<% end %>
+</div>

@@ -1,0 +1,25 @@
+<h1>Public::Posts#show</h1>
+<p>Find me in app/views/public/posts/show.html.erb</p>
+
+<h2>イベント詳細</h2>
+  <div class="row">
+    <div class="col-md-3">
+      <%= image_tag @post.get_image(150,150) %>
+    </div>
+
+    <div class="col-md-9">
+      <div class="row">
+        <div class="col-md-2">イベント名</div>
+        <div class="col-md-10 mb-4"><%= @post.event_name %></div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-2">イベント説明</div>
+        <div class="col-md-10 mb-4"><%= @post.event_detail %></div>
+      </div>
+
+    </div>
+  </div>
+  <div class="row justify-content-center">
+    <%= link_to '編集する', edit_post_path(@post.id), class:"btn btn-sm btn-success" %>
+  </div>
