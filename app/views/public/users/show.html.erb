@@ -5,9 +5,6 @@
 <% if @user == current_user %>
   <div><%= link_to "編集", edit_user_path(@user.id), class:"btn btn-sm btn-success" %></div>
 <% end %>
-<div class="row justify-content-center">
-    <%= link_to '投稿一覧', posts_path, class:"btn btn-sm btn-success" %>
-  </div>
 
 <div>
   <p>ユーザー名</p>
@@ -27,3 +24,20 @@
   <p>自己紹介</p>
   <%= @user.introduction %>
 </div>
+
+<div class="row justify-content-center">
+    <%= link_to '投稿一覧', posts_path, class:"btn btn-sm btn-success" %>
+</div>
+
+<% @posts.each do |post| %>
+  <div>
+    <%#= link_to post_path(post.id) do %>
+      <%#= image_tag post.get_image %>
+    <%# end %>
+    <p>イベント画像：<%= image_tag post.get_image(100,100) %></p>
+    <p>イベント名：<%= post.event_name %></p>
+    <p>イベント詳細：<%= post.event_detail %></p>
+    <p>ユーザーネーム：<%= post.user.name %></p>
+    <p><%= link_to "#{post.comments.count} コメント", post_path(post.id) %></p>
+  </div>
+<% end %>

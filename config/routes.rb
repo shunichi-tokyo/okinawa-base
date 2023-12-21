@@ -24,7 +24,10 @@ Rails.application.routes.draw do
     get 'users/check' => 'users#check', as: 'check'
     patch 'users/withdraw' => 'users#withdraw', as: 'withdraw'
     resources :users, only: [:show, :edit, :update]
-    resources :posts
+    resources :posts do
+      resource :favorites, only: [:create, :destroy]
+      resources :comments, only: [:create, :destroy]
+    end
   end
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end
