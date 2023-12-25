@@ -21,12 +21,18 @@ Rails.application.routes.draw do
 
   scope module: :public do
     root to: 'homes#top'
+    get "search" => "searches#search"
     get 'users/check' => 'users#check', as: 'check'
     patch 'users/withdraw' => 'users#withdraw', as: 'withdraw'
-    resources :users, only: [:show, :edit, :update]
+    resources :users, only: [:show, :edit, :update] do
+      member do
+        get :favorites
+      end
+    end
     resources :posts do
       resource :favorites, only: [:create, :destroy]
       resources :comments, only: [:create, :destroy]
+      
     end
   end
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html

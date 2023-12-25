@@ -1,6 +1,7 @@
 class Public::UsersController < ApplicationController
 
   before_action :ensure_user, only: [:edit, :update, :destroy]
+  before_action :set_user, only: [:favorites]
 
   def show
     @user = User.find(params[:id])
@@ -30,6 +31,12 @@ class Public::UsersController < ApplicationController
     redirect_to root_path
   end
 
+  def favorites
+    favorites = Favorite.where(user_id: @user.id).pluck(:post_id)
+    @favorite_posts = Post.find(favorites)
+    #@post = Post.find(params[:id])
+  end
+
   private
 
   def user_params
@@ -41,6 +48,10 @@ class Public::UsersController < ApplicationController
     unless user.id == current_user.id
       redirect_to user_path(current_user)
     end
+  end
+
+  def set_user
+    @user = User.find(params[:id])
   end
 
 
