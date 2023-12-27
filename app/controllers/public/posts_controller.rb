@@ -6,7 +6,7 @@ class Public::PostsController < ApplicationController
   def create
     @post = current_user.posts.new(post_params)
     #@post.user_id = current_user.id
-    tag_list = params[:post_workout][:name].split(',')
+    tag_list = params[:post][:tag_name].split(',')
     if @post.save
       @post.save_tags(tag_list)
       redirect_to post_path(@post.id), success: t('posts.create.create_success')
@@ -62,7 +62,7 @@ class Public::PostsController < ApplicationController
 
   def post_params
     params.require(:post).permit(:user_id, :area, :event_name, :event_detail,
-   :image)
+   :image, :lat, :lng)
   end
 
   def article_params
