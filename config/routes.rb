@@ -22,6 +22,7 @@ Rails.application.routes.draw do
   scope module: :public do
     root to: 'homes#top'
     get "search" => "searches#search"
+    get "search_tag" => "posts#search_tag"
     get 'users/check' => 'users#check', as: 'check'
     patch 'users/withdraw' => 'users#withdraw', as: 'withdraw'
     resources :users, only: [:show, :edit, :update] do

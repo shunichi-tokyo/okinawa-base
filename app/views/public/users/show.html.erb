@@ -42,5 +42,6 @@
     <p>イベント詳細：<%= post.event_detail %></p>
     <p>ユーザーネーム：<%= post.user.name %></p>
     <p><%= link_to "#{post.comments.count} コメント", post_path(post.id) %></p>
+    <p><%= @tags %></p>
   </div>
 <% end %>

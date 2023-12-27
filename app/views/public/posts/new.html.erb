@@ -35,6 +35,9 @@
     <label class="form-label">イベント詳細</label>
     <%= f.text_area :event_detail, class: "form-control" %>
   </div>
+  
+  <label>タグ(,で区切ると複数タグ登録できます)</label>
+        <%= f.text_field :tag_name,value: @tags, class: 'form-control' %>
 
   <%= f.submit '投稿する', class:"btn btn-success" %>
 

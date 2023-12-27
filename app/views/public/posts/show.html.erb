@@ -6,6 +6,10 @@
     <div class="col-md-3">
       <%= image_tag @post.get_image(150,150) %>
     </div>
+    <div><% @post.tags.each do |tag| %>
+    <span><%= tag.tag_name %></span>
+      <% end %>
+    </div>
 
     <div class="col-md-9">
       <div class="row">
@@ -36,7 +40,6 @@
       <% end %>
     </p>
   <% end %>
-
   <div>
   <p>コメント件数：<%= @post.comments.count %></p>
   <% @post.comments.each do |comment| %>
