@@ -14,18 +14,18 @@
     <% @posts.each do |post| %>
     <tr>
      <td><%= image_tag post.get_image(150,150) %></td>
-      <td><%= post.event_name %></td>
+      <td><%= link_to post.event_name, post_path(post.id) %></td>
       <td><%= post.event_detail %></td>
-      <% if post.user_id == current_user %>
+      <% if post.user == current_user %>
       <td><%= link_to '編集', edit_post_path(post.id), class:"btn btn-sm btn-success" %></td>
       <td><%= link_to "削除", post_path(post.id), method: :delete, class:"btn btn-sm btn-danger" %></td>
       <% end %>
       <td><%= link_to "#{post.comments.count} コメント", post_path(post.id) %></td>
       <td>
-        <% @tag_list.each do |list|%>
+        <% post.tags.each do |list|%>
           <i class="fa-sharp fa-solid fa-tag"></i>
           <%=link_to list.tag_name,search_tag_path(tag_id: list.id) %>
-          <%="(#{list.post.count})" %>
+          <%="(#{list.posts.count})" %>
           <% end %>
       </td>
     </tr>
@@ -89,4 +89,4 @@
   }
 </script>
 
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAH1txZgVQi_IOyjDLxH9D7YuERE-gpcWM&callback=initMap" async defer></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=<%= ENV['MAP_API_KEY'] %>&callback=initMap" async defer></script>

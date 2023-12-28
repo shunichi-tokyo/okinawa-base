@@ -8,6 +8,9 @@ class Post < ApplicationRecord
   has_many :post_tag, dependent: :destroy
   has_many :tags, through: :post_tag, dependent: :destroy
 
+   geocoded_by :area
+    after_validation :geocode
+
   def get_image(width, height)
     unless image.attached?
       file_path = Rails.root.join('app/assets/images/images.jpg')
@@ -33,7 +36,7 @@ class Post < ApplicationRecord
       @post = Post.all
     end
   end
-  
+
   def save_tags(tags)
   # タグが存在していれば、タグの名前を配列として全て取得
     current_tags = self.tags.pluck(:tag_name) unless self.tags.nil?

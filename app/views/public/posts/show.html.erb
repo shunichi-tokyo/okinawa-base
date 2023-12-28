@@ -2,7 +2,8 @@
 <p>Find me in app/views/public/posts/show.html.erb</p>
 
 <h2>イベント詳細</h2>
-  <div class="row">
+<div>投稿ユーザー：<%= link_to @post.user.name, user_path(@post.user.id) %></div>
+  <div class="row justify-content-center">
     <div class="col-md-3">
       <%= image_tag @post.get_image(150,150) %>
     </div>
@@ -86,4 +87,4 @@ function initMap(){
   });
 }
 </script>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAH1txZgVQi_IOyjDLxH9D7YuERE-gpcWM&callback=initMap" async defer></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=<%= ENV['MAP_API_KEY'] %>&callback=initMap" async defer></script>
