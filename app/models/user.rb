@@ -47,4 +47,12 @@ class User < ApplicationRecord
       @user = User.all
     end
   end
+
+  def user_status
+    if is_active == true
+      "有効"
+    else
+      "退会済み"
+    end
+  end
 end

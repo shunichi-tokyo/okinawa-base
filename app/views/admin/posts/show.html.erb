@@ -1,2 +1,35 @@
 <h1>Admin::Posts#show</h1>
-<p>Find me in app/views/admin/posts/show.html.erb</p>
+<h2>イベント詳細</h2>
+<div>投稿ユーザー：<%= link_to @post.user.name, user_path(@post.user.id) %></div>
+  <div class="row justify-content-center">
+    <div class="col-md-3">
+      <%= image_tag @post.get_image(150,150) %>
+    </div>
+    <div><% @post.tags.each do |tag| %>
+    <span><%= tag.tag_name %></span>
+      <% end %>
+    </div>
+
+    <div class="col-md-9">
+      <div class="row">
+        <div class="col-md-2">イベント名</div>
+        <div class="col-md-10 mb-4"><%= @post.event_name %></div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-2">イベント説明</div>
+        <div class="col-md-10 mb-4"><%= @post.event_detail %></div>
+      </div>
+
+    </div>
+  </div>
+  <div class="row justify-content-center">
+    <%= link_to '編集する', edit_post_path(@post.id), class:"btn btn-sm btn-success" %>
+  </div>
+  <p>コメント件数：<%= @post.comments.count %></p>
+  <% @post.comments.each do |comment| %>
+    <p><%= image_tag comment.user.get_profile_image(100,100) %></p>
+    <%= comment.user.name %>
+    <%= comment.created_at.strftime('%Y/%m/%d') %><%= comment.comment %>
+    <%= link_to "削除", admin_post_comment_path(comment.post, comment), method: :delete %>
+  <% end %>

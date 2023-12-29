@@ -10,9 +10,10 @@ Rails.application.routes.draw do
 
  namespace :admin do
     root to: 'homes#top'
-    resources :posts, only: [:index, :new, :create, :show, :edit, :update]
+    resources :posts, only: [:index, :show, :edit, :update, :destroy] do
+      resources :comments, only: [:create, :destroy]
+    end
     resources :users, only: [:index, :show, :edit, :update]
-    #resources :orders, only: [:show]
     end
 
   devise_scope :user do
@@ -33,7 +34,7 @@ Rails.application.routes.draw do
     resources :posts do
       resource :favorites, only: [:create, :destroy]
       resources :comments, only: [:create, :destroy]
-      
+
     end
   end
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html

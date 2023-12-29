@@ -29,10 +29,13 @@ class Public::SessionsController < Devise::SessionsController
   #   super
   # end
 
-  # DELETE /resource/sign_out
-  # def destroy
-  #   super
-  # end
+   def destroy
+     if current_user
+       sign_out current_user
+     else
+       redirect_to new_user_session_path
+     end
+   end
 
   protected
 
