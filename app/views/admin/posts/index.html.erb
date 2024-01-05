@@ -19,13 +19,14 @@
       <td><%= post.event_detail %></td>
       <td><%= link_to '編集', edit_admin_post_path(post.id), class:"btn btn-sm btn-success" %></td>
       <td><%= link_to "削除", admin_post_path(post.id), method: :delete, class:"btn btn-sm btn-danger" %></td>
-      <td><%= link_to "#{post.comments.count} コメント", post_path(post.id) %></td>
+      <td><%= link_to "#{post.comments.count} コメント", admin_post_path(post.id) %></td>
       <td>
         <% post.tags.each do |list|%>
-          <i class="fa-sharp fa-solid fa-tag"></i>
+          <span class="fas_char_backradius">
           <%=link_to list.tag_name,search_tag_path(tag_id: list.id) %>
           <%="(#{list.posts.count})" %>
           <% end %>
+          </span>
       </td>
     </tr>
   </tbody>

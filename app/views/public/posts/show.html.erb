@@ -7,8 +7,9 @@
     <div class="col-md-3">
       <%= image_tag @post.get_image(150,150) %>
     </div>
-    <div><% @post.tags.each do |tag| %>
-    <span><%= tag.tag_name %></span>
+    <div>
+      <% @post.tags.each do |tag| %>
+      <span class="fas_char_backradius"><%= tag.tag_name %></span>
       <% end %>
     </div>
 
@@ -43,19 +44,28 @@
   <% end %>
   <div>
   <p>コメント件数：<%= @post.comments.count %></p>
+  <div class="row justify-content-center">
   <% @post.comments.each do |comment| %>
-    <p><%= image_tag comment.user.get_profile_image(100,100) %></p>
+    <p><%= image_tag comment.user.get_profile_image(100,100), class: "rounded-circle"; %></p>
     <%= comment.user.name %>
     <%= comment.created_at.strftime('%Y/%m/%d') %><%= comment.comment %>
     <% if comment.user == current_user %>
       <%= link_to "削除", post_comment_path(comment.post, comment), method: :delete %>
     <% end %>
-
   <% end %>
+  </div>
 </div>
-<div>
+<div class="row">
+  <% if @comment.errors.any? %>
+  <%= @comment.errors.count %>件のエラーが発生しました
+  <ul>
+    <% @comment.errors.full_messages.each do |message| %>
+      <li><%= message %></li>
+    <% end %>
+  </ul>
+  <% end %>
   <%= form_with model: [@post, @comment] do |f| %>
-    <%= f.text_area :comment, rows: '5', placeholder: "コメントをここに" %>
+    <%= f.text_area :comment, placeholder: "コメントをここに" %>
     <%= f.submit "送信する" %>
   <% end %>
 </div>
