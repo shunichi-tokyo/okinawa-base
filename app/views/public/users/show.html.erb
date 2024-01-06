@@ -2,10 +2,6 @@
 
 <h2>マイページ</h2>
 
-<% if @user == current_user %>
-  <div><%= link_to "編集", edit_user_path(@user.id), class:"btn btn-sm btn-success" %></div>
-<% end %>
-
 <div>
   <p>ユーザー名</p>
   <%= @user.name %>
@@ -24,9 +20,11 @@
   <p>自己紹介</p>
   <%= @user.introduction %>
 </div>
-<div>
-  <%= link_to "いいねした投稿", favorites_user_path(@user) %>
-</div>
+<% if @user == current_user %>
+  <div><%= link_to "編集", edit_user_path(@user.id), class:"btn btn-success" %>
+      <%= link_to "いいねした投稿", favorites_user_path(@user) %>
+  </div>
+<% end %>
 
 <div class="row justify-content-center">
     <%= link_to '投稿一覧', posts_path, class:"btn btn-sm btn-success" %>

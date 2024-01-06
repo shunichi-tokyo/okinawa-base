@@ -7,12 +7,12 @@ class Post < ApplicationRecord
 
   has_many :post_tag, dependent: :destroy
   has_many :tags, through: :post_tag, dependent: :destroy
-  
+
   validates :event_name, presence: true
   validates :event_detail, presence: true
   validates :address, presence: true
 
-   geocoded_by :area
+   geocoded_by :address
     after_validation :geocode
 
   def get_image(width, height)

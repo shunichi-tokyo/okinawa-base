@@ -16,7 +16,7 @@
 
   <div class="form-group">
     <label class="form-label">エリア</label>
-    <%= f.text_field :area %>
+    <%= f.text_field :address %>
   </div>
 
   <div class="form-group">
@@ -100,14 +100,14 @@ function codeAddress(){
         aft = true
 
         //検索した時に緯度経度を入力する
-        document.getElementById('lat').value = results[0].geometry.location.lat();
-        document.getElementById('lng').value = results[0].geometry.location.lng();
+        document.getElementById('latitude').value = results[0].geometry.location.lat();
+        document.getElementById('longitude').value = results[0].geometry.location.lng();
 
         // マーカーのドロップ（ドラッグ終了）時のイベント
         google.maps.event.addListener( marker, 'dragend', function(ev){
             // イベントの引数evの、プロパティ.latLngが緯度経度
-            document.getElementById('lat').value = ev.latLng.lat();
-            document.getElementById('lng').value = ev.latLng.lng();
+            document.getElementById('latitude').value = ev.latLng.lat();
+            document.getElementById('longitude').value = ev.latLng.lng();
         });
     } else {
       alert('該当する結果がありませんでした：' + status);

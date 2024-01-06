@@ -3,29 +3,29 @@
 
 <h2>イベント詳細</h2>
 <div>投稿ユーザー：<%= link_to @post.user.name, user_path(@post.user.id) %></div>
+
   <div class="row justify-content-center">
-    <div class="col-md-3">
-      <%= image_tag @post.get_image(150,150) %>
-    </div>
-    <div>
-      <% @post.tags.each do |tag| %>
-      <span class="fas_char_backradius"><%= tag.tag_name %></span>
-      <% end %>
-    </div>
-
-    <div class="col-md-9">
-      <div class="row">
-        <div class="col-md-2">イベント名</div>
-        <div class="col-md-10 mb-4"><%= @post.event_name %></div>
-      </div>
-
-      <div class="row">
-        <div class="col-md-2">イベント説明</div>
-        <div class="col-md-10 mb-4"><%= @post.event_detail %></div>
-      </div>
-
-    </div>
+    <%= @post.address %>
   </div>
+  <div class="row justify-content-center">
+    <%= image_tag @post.get_image(300,300) %>
+  </div>
+  <div class="row justify-content-center">
+    <% @post.tags.each do |tag| %>
+    <span class="fas_char_backradius"><%= tag.tag_name %></span>
+      <% end %>
+  </div>
+
+  <div class="row justify-content-center mb-4">
+    <div class="">イベント名</div>
+    <div class=""><%= @post.event_name %></div>
+  </div>
+
+  <div class="row justify-content-center mb-4">
+    <div class="">イベント説明</div>
+    <div class=""><%= @post.event_detail %></div>
+  </div>
+</div>
   <div class="row justify-content-center">
     <%= link_to '編集する', edit_post_path(@post.id), class:"btn btn-sm btn-success" %>
   </div>
@@ -44,15 +44,23 @@
   <% end %>
   <div>
   <p>コメント件数：<%= @post.comments.count %></p>
-  <div class="row justify-content-center">
-  <% @post.comments.each do |comment| %>
-    <p><%= image_tag comment.user.get_profile_image(100,100), class: "rounded-circle"; %></p>
-    <%= comment.user.name %>
-    <%= comment.created_at.strftime('%Y/%m/%d') %><%= comment.comment %>
-    <% if comment.user == current_user %>
-      <%= link_to "削除", post_comment_path(comment.post, comment), method: :delete %>
-    <% end %>
-  <% end %>
+  <div class="row">
+    <table class="table table-sm">
+      <% @post.comments.each do |comment| %>
+      <tbody>
+        <tr>
+          <th class="col-3"><%= image_tag comment.user.get_profile_image(80,80), class: "rounded-circle"; %>
+              <%= comment.user.name %>
+          </th>
+          <th><%= comment.created_at.strftime('%Y/%m/%d') %></th>
+          <th><%= comment.comment %></th>
+          <% if comment.user == current_user %>
+          <th><%= link_to "削除", post_comment_path(comment.post, comment), method: :delete %></th>
+          <% end %>
+        </tr>
+      </tbody>
+      <% end %>
+    </table>
   </div>
 </div>
 <div class="row">
@@ -64,10 +72,12 @@
     <% end %>
   </ul>
   <% end %>
+  <div class="col-5">
   <%= form_with model: [@post, @comment] do |f| %>
     <%= f.text_area :comment, placeholder: "コメントをここに" %>
     <%= f.submit "送信する" %>
   <% end %>
+  </div>
 </div>
 <div id='map'></div>
 
@@ -87,12 +97,12 @@ function initMap(){
   geocoder = new google.maps.Geocoder()
 
   map = new google.maps.Map(document.getElementById('map'), {
-    center:  {lat: <%= @post.lat %>, lng: <%= @post.lng %>},
+    center:  {lat: <%= @post.latitude %>, lng: <%= @post.longitude %>},
     zoom: 15,
   });
 
    marker = new google.maps.Marker({
-    position:  {lat: <%= @post.lat %>, lng: <%= @post.lng %>},
+    position:  {lat: <%= @post.latitude %>, lng: <%= @post.longitude %>},
     map: map
   });
 }
