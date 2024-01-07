@@ -13,11 +13,24 @@
   <% else %>
     <!--検索対象モデルがUserではない時(= 検索対象モデルがBookの時) -->
     <tbody>
-      <% @posts.each do |post| %>
-        <tr>
-          <td><%= post.event_name %></td>
-          <td><%= post.event_detail %></td>
-        </tr>
+    <% @posts.each do |post| %>
+      <tr>
+        <td><%= image_tag post.get_image(150,150) %></td>
+        <td><%= link_to post.event_name, post_path(post.id) %></td>
+        <td><%= post.event_detail %></td>
+      <% if post.user == current_user %>
+        <td><%= link_to '編集', edit_post_path(post.id), class:"btn btn-sm btn-success" %></td>
+        <td><%= link_to "削除", post_path(post.id), method: :delete, class:"btn btn-sm btn-danger" %></td>
+      <% end %>
+        <td><%= link_to "#{post.comments.count} コメント", post_path(post.id) %></td>
+        <td>
+        <% post.tags.each do |list|%>
+          <i class="fa-sharp fa-solid fa-tag"></i>
+          <%=link_to list.tag_name,search_tag_path(tag_id: list.id) %>
+          <%="(#{list.posts.count})" %>
+        <% end %>
+        </td>
+      </tr>
       <% end %>
     </tbody>
   <% end %>

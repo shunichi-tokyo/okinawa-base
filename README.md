@@ -32,5 +32,5 @@
 - IDE：Cloud9
 ​
 ## 使用素材
-- エリアマップ素材として以下を使用
-  - 素材 Library.com(https://www.sozai-library.com/)
+- 写真素材として以下を使用
+  - O-DAN (オーダン) (https://o-dan.net/ja/)
