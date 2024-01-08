@@ -7,7 +7,7 @@ class Public::CommentsController < ApplicationController
     if comment.save
       redirect_to post_path(@post.id)
     else
-      render show
+      render :show
     end
   end
 

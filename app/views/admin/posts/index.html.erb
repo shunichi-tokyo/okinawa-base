@@ -27,7 +27,6 @@
           <% end %>
           </span>
       </td>
-      <td><%= link_to '編集', edit_admin_post_path(post.id), class:"btn btn-sm btn-success" %></td>
       <td><%= link_to "削除", admin_post_path(post.id), method: :delete, class:"btn btn-sm btn-danger" %></td>
     </tr>
   </tbody>
