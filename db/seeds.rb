@@ -5,3 +5,15 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+Admin.create!(
+  email: 'okinawa@okinawa',
+  password: 'Okinawa_base'
+)
+
+Tag.create([
+  { tag_name: 'タグ1' },
+  { tag_name: 'タグ2' },
+  { tag_name: 'タグ3' },
+  { tag_name: 'タグ4' },
+  { tag_name: 'タグ5' }
+])

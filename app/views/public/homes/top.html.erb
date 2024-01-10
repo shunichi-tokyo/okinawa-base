@@ -1,0 +1,29 @@
+<h3>homes#top</h3>
+<div class="row justify-content-center">
+  <h1 class="text-center">ようこそOKINAWA＿BASEへ<br />
+  ここでは様々なイベントを投稿して皆さんで共有し<br />
+  楽しい沖縄ライフを楽しもう</h1>
+</div>
+
+<h3>最新投稿</h3>
+<table class="table table-hover">
+  <tbody>
+    <% @new_posts.each do |new_post| %>
+    <tr>
+     <td><%= image_tag new_post.get_image(150,150) %></td>
+      <td><%= link_to new_post.event_name, post_path(new_post.id) %></td>
+      <td><%= new_post.event_detail %></td>
+      <td>
+        <% new_post.tags.each do |list|%>
+          <i class="fa-sharp fa-solid fa-tag"></i>
+          <%=link_to list.tag_name,search_tag_path(tag_id: list.id) %>
+          <%="(#{list.posts.count})" %>
+          <% end %>
+      </td>
+    </tr>
+  </tbody>
+  <% end %>
+</table>
+  <div class="text-right">
+    <%= link_to "全ての投稿を見る＞", posts_path, class:"btn btn-outline-info" %>
+  </div>

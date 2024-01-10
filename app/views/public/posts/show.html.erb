@@ -1,0 +1,111 @@
+<h1>Public::Posts#show</h1>
+<p>Find me in app/views/public/posts/show.html.erb</p>
+
+<h2>イベント詳細</h2>
+<div>投稿ユーザー：<%= link_to @post.user.name, user_path(@post.user.id) %></div>
+
+  <div class="row justify-content-center">
+    <%= @post.address %>
+  </div>
+  <div class="row justify-content-center">
+    <%= image_tag @post.get_image(300,300) %>
+  </div>
+  <div class="row justify-content-center">
+    <% @post.tags.each do |tag| %>
+    <span class="fas_char_backradius"><%= tag.tag_name %></span>
+      <% end %>
+  </div>
+
+  <div class="row justify-content-center mb-4">
+    <div class="">イベント名：</div>
+    <div class=""><%= @post.event_name %></div>
+  </div>
+
+  <div class="row justify-content-center mb-4">
+    <div class="">イベント説明：</div>
+    <div class=""><%= @post.event_detail %></div>
+  </div>
+</div>
+  <div class="row justify-content-center">
+    <%= link_to '編集する', edit_post_path(@post.id), class:"btn btn-sm btn-success" %>
+  </div>
+  <% if @post.favorited_by?(current_user) %>
+    <p>
+      <%= link_to post_favorites_path(@post), method: :delete do %>
+        ♥<%= @post.favorites.count %> いいね
+      <% end %>
+    </p>
+    <% else %>
+    <p>
+      <%= link_to post_favorites_path(@post), method: :post do %>
+        ♡<%= @post.favorites.count %> いいね
+      <% end %>
+    </p>
+  <% end %>
+  <div>
+  <p>コメント件数：<%= @post.comments.count %></p>
+  <div class="row">
+    <table class="table">
+      <% @post.comments.each do |comment| %>
+      <tbody>
+        <tr>
+          <th class="col-3"><%= image_tag comment.user.get_profile_image(80,80), class: "rounded-circle"; %>
+              <%= comment.user.name %>
+          </th>
+          <th><%= comment.created_at.strftime('%Y/%m/%d') %></th>
+          <th><%= comment.comment %></th>
+          <% if comment.user == current_user %>
+          <th><%= link_to "削除", post_comment_path(comment.post, comment), method: :delete %></th>
+          <% end %>
+        </tr>
+      </tbody>
+      <% end %>
+    </table>
+  </div>
+</div>
+<div class="">
+  <% if @comment.errors.any? %>
+  <%= @comment.errors.count %>件のエラーが発生しました
+  <ul>
+    <% @comment.errors.full_messages.each do |message| %>
+      <li><%= message %></li>
+    <% end %>
+  </ul>
+  <% end %>
+</div>
+  <div class="">
+  <%= form_with model: [@post, @comment] do |f| %>
+    <%= f.text_area :comment, placeholder: "コメントをここに", class:"col-sm-4" %>
+
+    <%= f.submit "送信する", class:" btn-sm btn-info" %>
+  <% end %>
+  </div>
+<div id='map'></div>
+
+<style>
+#map {
+  height: 600px;
+  width: 100%;
+}
+</style>
+
+<!-- js部分 -->
+<script>
+//初期マップの設定
+let map
+let marker
+function initMap(){
+  geocoder = new google.maps.Geocoder()
+
+  map = new google.maps.Map(document.getElementById('map'), {
+    center:  {lat: <%= @post.latitude %>, lng: <%= @post.longitude %>},
+    zoom: 15,
+  });
+
+   marker = new google.maps.Marker({
+    position:  {lat: <%= @post.latitude %>, lng: <%= @post.longitude %>},
+    map: map
+  });
+}
+</script>
+<script src="https://maps.googleapis.com/maps/api/js?key=<%= ENV['MAP_API_KEY'] %>&callback=initMap" async defer></script>

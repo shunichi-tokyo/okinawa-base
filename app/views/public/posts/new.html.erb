@@ -1,0 +1,119 @@
+<h1>Public::Posts#new</h1>
+<p>Find me in app/views/public/posts/new.html.erb</p>
+
+<div>新規投稿</div>
+<% if @post.errors.any? %>
+  <%= @post.errors.count %>件のエラーが発生しました
+  <ul>
+    <% @post.errors.full_messages.each do |message| %>
+      <li><%= message %></li>
+    <% end %>
+  </ul>
+<% end %>
+
+<div class="row justify-content-center">
+<%= form_with(model: @post, local: true) do |f| %>
+
+  <div class="form-group">
+    <label class="form-label">エリア</label>
+    <%= f.text_field :address %>
+  </div>
+
+  <div class="form-group">
+    <label class="form-label">イベント画像</label>
+    <%= f.file_field :image, accept: "image/*" %>
+  </div>
+
+  <div class="form-group">
+    <label class="form-label">イベント名</label>
+    <%= f.text_field :event_name, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <label class="form-label">イベント詳細</label>
+    <%= f.text_area :event_detail, class: "form-control" %>
+  </div>
+
+  <label>タグ(,で区切ると複数タグ登録できます)</label>
+        <%= f.text_field :tag_name,value: @tags, class: 'form-control' %>
+
+  <div class="actions">
+    <%= f.label :lat,"緯度" %>
+    <%= f.text_field :lat,:value =>"緯度", id: :lat %>
+    <%= f.label :lng,"経度" %>
+    <%= f.text_field :lng,:value =>"経度", id: :lng %>
+
+    <%= f.submit '投稿する', class:"btn btn-success" %>
+  </div>
+<% end %>
+</div>
+
+  <h2>Map</h2>
+
+<input id="address" type="textbox" value="GeekSalon">
+<input type="button" value="検索" onclick="codeAddress()">
+<p>マーカーをドラック＆ドロップで位置の調整ができます。<p>
+<div id='map'></div>
+
+<style>
+#map {
+  height: 600px;
+  width: 80%;
+}
+</style>
+
+<script>
+//初期マップの設定
+let map
+let marker
+function initMap(){
+  geocoder = new google.maps.Geocoder()
+
+  map = new google.maps.Map(document.getElementById('map'), {
+    center:  {lat: 26.6163171, lng:127.7011471},  //沖縄
+    zoom: 10,
+
+  });
+}
+
+//検索後のマップ作成
+let geocoder
+let aft
+function codeAddress(){
+  let inputAddress = document.getElementById('address').value;
+  geocoder.geocode( { 'address': inputAddress}, function(results, status) {
+    if (status == 'OK') {
+        //マーカーが複数できないようにする
+        if (aft == true){
+            marker.setMap(null);
+        }
+
+        //新しくマーカーを作成する
+        map.setCenter(results[0].geometry.location);
+            marker = new google.maps.Marker({
+            map: map,
+            position: results[0].geometry.location,
+            draggable: true	// ドラッグ可能にする
+        });
+
+        //二度目以降か判断
+        aft = true
+
+        //検索した時に緯度経度を入力する
+        document.getElementById('latitude').value = results[0].geometry.location.lat();
+        document.getElementById('longitude').value = results[0].geometry.location.lng();
+
+        // マーカーのドロップ（ドラッグ終了）時のイベント
+        google.maps.event.addListener( marker, 'dragend', function(ev){
+            // イベントの引数evの、プロパティ.latLngが緯度経度
+            document.getElementById('latitude').value = ev.latLng.lat();
+            document.getElementById('longitude').value = ev.latLng.lng();
+        });
+    } else {
+      alert('該当する結果がありませんでした：' + status);
+    }
+  });
+}
+
+</script>
+<script src="https://maps.googleapis.com/maps/api/js?key=<%= ENV['MAP_API_KEY'] %>&callback=initMap" async defer></script>

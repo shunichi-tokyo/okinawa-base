@@ -1,0 +1,14 @@
+// Place all the styles related to the public/homes controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: https://sass-lang.com/
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.table {
+  background-image: url(assets/images/lewis-yin--vAZLOQCVXo-unsplash.jpg);
+  background-size: cover;
+  background-position: center;
+}

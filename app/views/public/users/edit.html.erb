@@ -1,0 +1,45 @@
+<div><%= flash[:notice] %></div>
+<div>
+  <% if @user.errors.any? %>
+    <%= @user.errors.count %>件のエラーが発生しました
+    <ul>
+      <% @user.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+    </ul>
+  <% end %>
+
+  <h2>プロフィール編集</h2>
+  <%= form_with model: @user do |f| %>
+  <table class="table">
+    <tr>
+      <td class="text-monospace">名前</td>
+      <td><%= f.text_field :name, autofocus: true, id:"inputName", placeholder:"名前" %></td>
+    </tr>
+    <tr>
+      <td class="text-monospace">プロフィール画像</td>
+      <td><%= f.file_field :profile_image, placeholder: "プロフィール画像", accept: "image/*" %></td>
+    </tr>
+    <tr>
+      <td class="text-monospace">メールアドレス</td>
+      <td><%= f.text_field :email, placeholder: "メール" %></td>
+    </tr>
+    <tr>
+      <td class="text-monospace">自己紹介</td>
+      <td><%= f.text_area :introduction, placeholder:"自己紹介" %></td>
+    </tr>
+    <tr>
+      <td><%= f.submit "更新する", class: "btn btn-lg btn-success" %></td>
+    </tr>
+  </table>
+    <% end %>
+
+  <div class="row">
+    <div class="col-2">
+      <%= link_to "戻る", user_path(@user.id), class:"btn btn-sm btn-outline-secondary" %>
+    </div>
+    <div class="col-2">
+      <%= link_to "退会する", check_path, class:"btn btn-sm btn-outline-danger" %>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,49 @@
+<h3>users#show</h3>
+
+<h2>マイページ</h2>
+
+<div class="row justify-content-center">
+  <%= image_tag @user.get_profile_image(200,200), class: "rounded-circle"; %>
+</div>
+
+<h3 class="row justify-content-center"><%= @user.name %></h3>
+
+<% if @user == current_user %>
+<div class="row justify-content-center">
+  <%= @user.email %>
+</div>
+<% end %>
+
+<div class="row justify-content-center">
+  <h4><%= @user.introduction %></h4>
+</div>
+<% if @user == current_user %>
+  <div class="row justify-content-center">
+    <%= link_to "編集", edit_user_path(@user.id), class:"btn btn-primary" %>
+  </div>
+  <div>
+    <%= link_to "いいねした投稿", favorites_user_path(@user) %>
+  </div>
+<% end %>
+</div>
+
+<div class="row justify-content-center">
+    <%= link_to '投稿一覧', posts_path, class:"btn btn-sm btn-success" %>
+</div>
+<table class="table">
+  <% @posts.each do |post| %>
+  <tbody>
+    <tr>
+      <td>イベント画像：<%= image_tag post.get_image(100,100) %></td>
+      <td>イベント名：<%= link_to post.event_name, post_path(post.id) %></td>
+      <td>イベント詳細：<%= post.event_detail %></td>
+      <td><%= link_to "#{post.comments.count} コメント", post_path(post.id) %></td>
+      <td><% post.tags.each do |list|%>
+          <i class="fa-sharp fa-solid fa-tag"></i>
+          <%=link_to list.tag_name,search_tag_path(tag_id: list.id) %>
+          <%="(#{list.posts.count})" %>
+          <% end %></td>
+    </tr>
+  </tbody>
+  <% end %>
+</table>
