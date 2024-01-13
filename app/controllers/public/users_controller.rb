@@ -43,12 +43,12 @@ class Public::UsersController < ApplicationController
     params.require(:user).permit(:name, :introduction, :is_active, :profile_image)
   end
 
-  #def ensure_user
-    #user = User.find(params[:id])
-    #unless user.id == current_user.id
-      #redirect_to user_path(current_user)
-    #end
-  #end
+  def ensure_user
+    user = User.find(params[:id])
+    unless user.id == current_user.id
+      redirect_to user_path(current_user)
+    end
+  end
 
   def set_user
     @user = User.find(params[:id])
