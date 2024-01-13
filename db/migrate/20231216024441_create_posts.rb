@@ -7,10 +7,7 @@ class CreatePosts < ActiveRecord::Migration[6.1]
       t.string  :area, null: false
       t.string  :event_name, null: false
       t.text    :event_detail, null: false
-      t.date    :period, null: false
-      t.string  :tag_index, null: false
-      t.integer :price, null: false
-      
+
     end
   end
 end
