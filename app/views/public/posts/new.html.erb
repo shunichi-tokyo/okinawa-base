@@ -38,10 +38,10 @@
         <%= f.text_field :tag_name,value: @tags, class: 'form-control' %>
 
   <div class="actions">
-    <%= f.label :lat,"緯度" %>
-    <%= f.text_field :lat,:value =>"緯度", id: :lat %>
-    <%= f.label :lng,"経度" %>
-    <%= f.text_field :lng,:value =>"経度", id: :lng %>
+    <%= f.label :latitude,"緯度" %>
+    <%= f.text_field :latitude,:value =>"緯度", id: :latitude %>
+    <%= f.label :longitude,"経度" %>
+    <%= f.text_field :longitude,:value =>"経度", id: :longitude %>
 
     <%= f.submit '投稿する', class:"btn btn-success" %>
   </div>
