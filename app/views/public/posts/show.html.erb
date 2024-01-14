@@ -11,8 +11,10 @@
     <%= image_tag @post.get_image(300,300) %>
   </div>
   <div class="row justify-content-center">
-    <% @post.tags.each do |tag| %>
-    <span class="fas_char_backradius"><%= tag.tag_name %></span>
+    <% @post.tags.each do |list| %>
+    <i class="fa-sharp fa-solid fa-tag"></i>
+          <%=link_to list.tag_name,search_tag_path(tag_id: list.id) %>
+          <%="(#{list.posts.count})" %>
       <% end %>
   </div>
 
