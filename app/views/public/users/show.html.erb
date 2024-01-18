@@ -43,6 +43,10 @@
           <%=link_to list.tag_name,search_tag_path(tag_id: list.id) %>
           <%="(#{list.posts.count})" %>
           <% end %></td>
+      <% if post.user == current_user %>
+      <td><%= link_to '編集', edit_post_path(post.id), class:"btn btn-sm btn-success" %></td>
+      <td><%= link_to "削除", post_path(post.id), method: :delete, class:"btn btn-sm btn-danger" %></td>
+      <% end %>
     </tr>
   </tbody>
   <% end %>

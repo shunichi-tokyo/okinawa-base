@@ -28,9 +28,11 @@
     <div class=""><%= @post.event_detail %></div>
   </div>
 </div>
+<% if @user == current_user %>
   <div class="row justify-content-center">
     <%= link_to '編集する', edit_post_path(@post.id), class:"btn btn-sm btn-success" %>
   </div>
+<% end %>
   <% if @post.favorited_by?(current_user) %>
     <p>
       <%= link_to post_favorites_path(@post), method: :delete do %>
