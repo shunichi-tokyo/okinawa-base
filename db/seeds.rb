@@ -9,7 +9,8 @@ admin_user = Admin.find_by(email: 'okinawa@okinawa')
 if admin_user.nil?
   Admin.create!(
     email: 'okinawa@okinawa',
-    password: ENV['ADMIN_KEY']
+    password: ENV['ADMIN_KEY'],
+    password_confirmation: ENV['ADMIN_KEY']
   )
 end
 
