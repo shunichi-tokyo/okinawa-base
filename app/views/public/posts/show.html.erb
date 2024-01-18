@@ -28,7 +28,7 @@
     <div class=""><%= @post.event_detail %></div>
   </div>
 </div>
-<% if @user == current_user %>
+<% if @post.user == current_user %>
   <div class="row justify-content-center">
     <%= link_to '編集する', edit_post_path(@post.id), class:"btn btn-sm btn-success" %>
   </div>
