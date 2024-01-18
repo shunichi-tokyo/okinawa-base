@@ -6,11 +6,11 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 admin_user = Admin.find_by(email: 'okinawa@okinawa')
+puts "ADMIN_KEY: #{ENV['ADMIN_KEY']}"
 if admin_user.nil?
   Admin.create!(
     email: 'okinawa@okinawa',
-    password: ENV['ADMIN_KEY'],
-    password_confirmation: ENV['ADMIN_KEY']
+    password: ENV['ADMIN_KEY']
   )
 end
 
